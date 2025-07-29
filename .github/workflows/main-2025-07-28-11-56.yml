@@ -9,8 +9,8 @@ jobs:
 
     steps:
       - name: Check HOME env
-        run: echo "HOME is: $HOME"
-  
+        run: echo $HOME
+      
       - name: Checkout repository
         uses: actions/checkout@v4
 
