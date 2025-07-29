@@ -27,14 +27,9 @@ jobs:
         with:
           node-version: '18' # Or your required version
 
-      - name: Install Tauri CLI (if not already in cache)
-        run: |
-          if ! command -v cargo-tauri &> /dev/null; then
-            cargo install tauri-cli
-          else
-            echo "Tauri CLI is already cached"
-          fi
-
+    - name: ListJim
+      run: list
+      
       - name: Initialize Tauri project
         run: |
           cargo-tauri init --ci --app-name "YouCanAlwaysGoBack" --window-title "You Can Always Go Back"
