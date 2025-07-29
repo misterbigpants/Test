@@ -27,8 +27,8 @@ jobs:
         with:
           node-version: '18' # Or your required version
 
-    - name: ListJim
-      run: ls
+      - name: ListJim
+        run: ls
       
       - name: Initialize Tauri project
         run: |
