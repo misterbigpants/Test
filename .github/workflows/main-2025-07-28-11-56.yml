@@ -1,0 +1,28 @@
+name: New-2025-07-28-11:55pm
+
+on:
+  workflow_dispatch:
+
+jobs:
+  tauri-init:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Or your required version
+
+      - name: Install Tauri CLI
+        run: |
+          cargo install tauri-cli
+
+      - name: Initialize Tauri project
+        run: |
+          tauri init --ci --app-name "MyApp" --window-title "My Tauri App" --dist-dir "../dist" --dev-path "http://localhost:3000"
