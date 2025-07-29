@@ -11,14 +11,20 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Cache full Cargo folder
+      - name: Cache Cargo registry, index, rustup, and build
         uses: actions/cache@v4
         with:
-          path: ~/.cargo
-          key: ${{ runner.os }}-cargo-full-${{ hashFiles('**/Cargo.lock') }}
+          path: |
+            $HOME/.cargo
+            $HOME/.rustup
+            target
+          key: ${{ runner.os }}-cargo-complete-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cargo-full-
-
+            ${{ runner.os }}-cargo-complete-
+      
+      - name: Check cached Cargo contents
+        run: ls -al $HOME/.cargo
+  
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
 
@@ -29,12 +35,23 @@ jobs:
 
       - name: ListJim
         run: ls
+
+      - name: Install Tauri CLI (if not already in cache)
+        run: |
+          if ! command -v cargo-tauri &> /dev/null; then
+            cargo install tauri-cli
+          else
+            echo "Tauri CLI is already cached"
+          fi
       
       - name: Initialize Tauri project
         run: |
           cargo-tauri init --ci --app-name "YouCanAlwaysGoBack" --window-title "You Can Always Go Back"
           [ -d ios ] || cargo-tauri ios init
 
-      - name: Create iOS build
-        run: cargo-tauri ios build
+      - name: ListJim
+        run: ls
+
+#      - name: Create iOS build
+#        run: cargo-tauri ios build
 
