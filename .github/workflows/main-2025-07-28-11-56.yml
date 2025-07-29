@@ -8,17 +8,24 @@ jobs:
     runs-on: macos-latest
 
     steps:
+      - name: Check HOME env
+        run: echo "HOME is: $HOME"
+  
       - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Pre-create .cargo directory
-        run: mkdir -p "$HOME/.cargo"
+        run: |
+          mkdir -p "$HOME/.cargo"
+          ls -al "$HOME/.cargo"
 
       - name: Pre-create .cargo directory
-        run: mkdir -p "$HOME/.rustup"
+        run: |
+          mkdir -p "$HOME/.rustup"
+          ls -al "$HOME/.rustup"
 
       - name: Check cargo and rustup folders exist
-        run: ls -al "$HOME/.cargo"
+        run: ls -al "$HOME"
 
       - name: Cache Cargo registry, index, rustup, and build
         uses: actions/cache@v4
