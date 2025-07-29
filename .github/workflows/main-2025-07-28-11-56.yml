@@ -17,6 +17,9 @@ jobs:
       - name: Pre-create .cargo directory
         run: mkdir -p "$HOME/.rustup"
 
+      - name: Check cargo and rustup folders exist
+        run: ls -al "$HOME/.cargo"
+
       - name: Cache Cargo registry, index, rustup, and build
         uses: actions/cache@v4
         with:
