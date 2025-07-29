@@ -1,0 +1,57 @@
+name: New-2025-07-29-11:33am
+
+on:
+  workflow_dispatch:
+
+jobs:
+  tauri-init:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Pre-create .cargo directory
+        run: mkdir -p $HOME/.cargo
+
+      - name: Pre-create .cargo directory
+        run: mkdir -p $HOME/.rustup
+
+      - name: Cache Cargo registry, index, rustup, and build
+        uses: actions/cache@v4
+        with:
+          path: |
+            $HOME/.cargo
+            $HOME/.rustup
+            target
+          key: ${{ runner.os }}-cargo-complete-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-complete-
+      
+      - name: Check cached Cargo contents
+        run: ls -al $HOME/.cargo
+  
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Or your required version
+
+      - name: ListJim
+        run: ls
+
+      - name: Check cached Cargo contents
+        run: ls -al $HOME/.cargo
+      
+      - name: Initialize Tauri project
+        run: |
+          cargo-tauri init --ci --app-name "YouCanAlwaysGoBack" --window-title "You Can Always Go Back"
+          [ -d ios ] || cargo-tauri ios init
+
+      - name: ListJim
+        run: ls
+
+#      - name: Create iOS build
+#        run: cargo-tauri ios build
