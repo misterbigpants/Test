@@ -33,7 +33,7 @@ jobs:
             ${{ runner.os }}-cargo-complete-
 
       - name: ListJim
-        run: ls -a "$HOME"
+        run: ls -lah "$HOME"
 
       - name: Install Node.js
         uses: actions/setup-node@v3
@@ -41,7 +41,7 @@ jobs:
           node-version: '18' # Or your required version
 
       - name: ListJim
-        run: ls -a
+        run: ls -lah
 
       - name: Initialize Tauri project
         run: |
@@ -49,7 +49,7 @@ jobs:
           [ -d ios ] || cargo-tauri ios init
 
       - name: ListJim
-        run: ls -a
+        run: ls -lah "src-tauri"
 
 #      - name: Create iOS build
 #        run: cargo-tauri ios build
