@@ -1,4 +1,4 @@
-name: New-2025-07-28-11:55pm
+name: New-2025-07-29-11:33am
 
 on:
   workflow_dispatch:
@@ -9,7 +9,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - name: Cache full Cargo folder
+        uses: actions/cache@v4
+        with:
+          path: ~/.cargo
+          key: ${{ runner.os }}-cargo-full-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-full-
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
@@ -19,10 +27,16 @@ jobs:
         with:
           node-version: '18' # Or your required version
 
-      - name: Install Tauri CLI
+      - name: Install Tauri CLI (if not already in cache)
         run: |
-          cargo install tauri-cli
+          if ! command -v tauri &> /dev/null; then
+            cargo install tauri-cli
+          else
+            echo "Tauri CLI is already cached"
+          fi
 
       - name: Initialize Tauri project
         run: |
-          tauri init --ci --app-name "MyApp" --window-title "My Tauri App" --dist-dir "../dist" --dev-path "http://localhost:3000"
+          cargo-tauri init --ci --app-name "YouCanAlwaysGoBack" --window-title "You Can Always Go Back" --dist-dir "../dist" --dev-path "http://localhost:3000"
+
+
