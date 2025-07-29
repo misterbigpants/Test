@@ -1,4 +1,4 @@
-name: New-2025-07-29-6:34pm
+name: New-2025-07-29-7:42pm Cached
 
 on:
   workflow_dispatch:
@@ -27,13 +27,13 @@ jobs:
       - name: Check cargo and rustup folders exist
         run: ls -al "$HOME"
 
-# in a punch: $HOME is /Users/runner/
+# Path must be hard-coded: /Users/runner/   $HOME only works within shell.
       - name: Cache Cargo registry, index, rustup, and build
         uses: actions/cache@v4
         with:
           path: |
-            ${{ runner.home }}/.cargo
-            ${{ runner.home }}/.rustup
+            /Users/runner/.cargo
+            /Users/runner/.rustup
             target
           key: ${{ runner.os }}-cargo-complete-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
