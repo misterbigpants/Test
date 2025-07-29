@@ -37,6 +37,9 @@ jobs:
 
       - name: Initialize Tauri project
         run: |
-          cargo-tauri init --ci --app-name "YouCanAlwaysGoBack" --window-title "You Can Always Go Back" --dist-dir "../dist" --dev-path "http://localhost:3000"
+          cargo-tauri init --ci --app-name "YouCanAlwaysGoBack" --window-title "You Can Always Go Back"
+          [ -d ios ] || cargo-tauri ios init
 
+      - name: Create iOS build
+        run: cargo-tauri ios build
 
