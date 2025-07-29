@@ -29,7 +29,7 @@ jobs:
 
       - name: Install Tauri CLI (if not already in cache)
         run: |
-          if ! command -v tauri &> /dev/null; then
+          if ! command -v cargo-tauri &> /dev/null; then
             cargo install tauri-cli
           else
             echo "Tauri CLI is already cached"
