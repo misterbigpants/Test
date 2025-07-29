@@ -31,8 +31,8 @@ jobs:
         uses: actions/cache@v4
         with:
           path: |
-            $HOME/.cargo
-            $HOME/.rustup
+            ${{ env.HOME }}/.cargo
+            ${{ env.HOME }}/.rustup
             target
           key: ${{ runner.os }}-cargo-complete-${{ hashFiles('**/Cargo.lock') }}
           restore-keys: |
