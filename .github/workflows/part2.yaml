@@ -1,0 +1,55 @@
+# Assumes part1 has been run
+# $HOME points to /Users/runner
+# working folder is further down
+# Path must be hard-coded: /Users/runner/   $HOME only works within shell.
+
+name: Part2-7-48pm
+
+on:
+  workflow_dispatch:
+
+jobs:
+  tauri-init:
+    runs-on: macos-latest
+
+    steps:      
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Pre-create .cargo directory
+        run: |
+          mkdir -p "$HOME/.cargo"
+          mkdir -p "$HOME/.rustup"
+
+      - name: Cache Cargo registry, index, rustup, and build
+        uses: actions/cache@v4
+        with:
+          path: |
+            /Users/runner/.cargo
+            /Users/runner/.rustup
+            target
+          key: ${{ runner.os }}-cargo-complete-${{ hashFiles('**/Cargo.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-cargo-complete-
+
+      - name: ListJim
+        run: ls -a "$HOME"
+
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18' # Or your required version
+
+      - name: ListJim
+        run: ls -a
+
+      - name: Initialize Tauri project
+        run: |
+          cargo-tauri init --ci --app-name "YouCanAlwaysGoBack" --window-title "You Can Always Go Back"
+          [ -d ios ] || cargo-tauri ios init
+
+      - name: ListJim
+        run: ls -a
+
+#      - name: Create iOS build
+#        run: cargo-tauri ios build
