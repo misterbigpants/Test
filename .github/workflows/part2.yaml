@@ -3,7 +3,7 @@
 # working folder is further down
 # Path must be hard-coded: /Users/runner/   $HOME only works within shell.
 
-name: Part2-7-48pm
+name: Part2-11:59pm
 
 on:
   workflow_dispatch:
@@ -42,11 +42,20 @@ jobs:
 
       - name: ListJim
         run: ls -lah
-
+        
+      - name: tauri info
+        run: cargo-tauri info
+        
       - name: Initialize Tauri project
         run: |
           cargo-tauri init --ci --app-name "YouCanAlwaysGoBack" --window-title "You Can Always Go Back"
           [ -d ios ] || cargo-tauri ios init
+
+      - name: tauri info
+        run: cargo-tauri info
+
+      - name: ListJim
+        run: ls -lah
 
       - name: ListJim
         run: ls -lah "src-tauri"
